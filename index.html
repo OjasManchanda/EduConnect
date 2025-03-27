@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Student Login Page | Firebase Auth</title>
+    <style>
+        .error-message, .success-message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            display: none;
+        }
+        .error-message {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
+        }
+        .success-message {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+        .spinner {
+            display: none;
+            margin-left: 8px;
+        }
+        .toggle-panel h1 {
+            font-size: 1.5rem;
+        }
+        .toggle-panel p {
+            font-size: 0.9rem;
+        }
+        /* Add this to make the login button look consistent */
+        button a {
+            color: inherit;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="container">
+        <div class="form-container sign-up">
+            <form>
+                <h1>Student Login</h1>
+                <div class="social-icons">
+                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                </div>
+                <span>or use your email to log in</span>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <div class="error-message"></div>
+                <div class="success-message"></div>
+                <button type="button" onclick="window.location.href='dashboard3.html'">
+                    <span class="button-text">Login</span>
+                    <span class="spinner"><i class="fas fa-spinner fa-spin"></i></span>
+                </button>
+            </form>
+        </div>
+
+        <div class="form-container sign-in">
+            <form>
+                <h1>Student Login</h1>
+                <div class="social-icons">
+                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                </div>
+                <span>or use your email password</span>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <div class="error-message"></div>
+                <div class="success-message"></div>
+                <a href="#">Forget Your Password?</a>
+                <button type="button" onclick="window.location.href='dashboard3.html'">
+                    <span class="button-text">Login</span>
+                    <span class="spinner"><i class="fas fa-spinner fa-spin"></i></span>
+                </button>
+                <button type="button" onclick="window.location.href='newlogin.html'">Create Account</button>
+            </form>
+        </div>
+
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <h1>Welcome Back!</h1>
+                    <p>Login with your student credentials to access your dashboard</p>
+                    <button type="button" class="hidden" id="login" onclick="window.location.href='dashboard3.html'">Student Login</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1>Admin/trainer login</h1>
+                    <p>Administrators and trainers login here</p>
+                    <button type="button" class="hidden" id="register" onclick="window.location.href='dashboard3.html'">Admin Sign in</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Simple script to handle the login redirection
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all login buttons
+            const loginButtons = document.querySelectorAll('button[onclick*="dashboard3.html"]');
+            
+            // Add click event to all login buttons
+            loginButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    window.location.href = 'dashboard3.html';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

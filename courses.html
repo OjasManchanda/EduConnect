@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classroom Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-color: #f4f4f4;
+        }
+        .navbar {
+            background: #3f51b5;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 20px;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .section {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .green-box {
+            background: #8bc34a;
+            color: white;
+        }
+        .course-card {
+            background: #ffffff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .course-card a {
+            text-decoration: none;
+            background: #3f51b5;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+        .button {
+            padding: 10px;
+            border: none;
+            background: #3f51b5;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .button:hover {
+            background: #303f9f;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">Classroom Portal</div>
+    <div class="container">
+        <div class="section green-box">
+            <h2>Join Course</h2>
+            <input type="text" id="courseCode" placeholder="Enter class code">
+            <button class="button" onclick="joinCourse()">Join Course</button>
+        </div>
+        <div class="section green-box">
+            <h2>Create Course</h2>
+            <input type="text" id="courseName" placeholder="Course Name">
+            <button class="button" onclick="createCourse()">Create Course</button>
+        </div>
+        <h2>Active Courses</h2>
+        <div id="coursesList"></div>
+    </div>
+    <script>
+        let courses = [];
+
+        function createCourse() {
+            const courseName = document.getElementById("courseName").value;
+            if (courseName) {
+                const courseCode = Math.random().toString(36).substr(2, 6).toUpperCase();
+                courses.push({ name: courseName, code: courseCode });
+                displayCourses();
+                document.getElementById("courseName").value = "";
+            }
+        }
+
+        function joinCourse() {
+            const enteredCode = document.getElementById("courseCode").value;
+            const course = courses.find(c => c.code === enteredCode);
+            if (course) {
+                alert("Successfully joined " + course.name);
+            } else {
+                alert("Invalid course code!");
+            }
+            document.getElementById("courseCode").value = "";
+        }
+
+        function displayCourses() {
+            const list = document.getElementById("coursesList");
+            list.innerHTML = "";
+            courses.forEach(course => {
+                const div = document.createElement("div");
+                div.className = "course-card";
+                div.innerHTML = `<span>${course.name} (Code: ${course.code})</span> <a href="#">View Course</a>`;
+                list.appendChild(div);
+            });
+        }
+    </script>
+</body>
+</html>
