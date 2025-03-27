@@ -1,10 +1,307 @@
-<div class="stat-card">
-    <div class="stat-icon yellow">
-        <i class="fas fa-star"></i>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provisional Marksheet</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .marksheet-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a3b8b, #3a6fd9);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        
+        .student-info {
+            padding: 20px;
+            background-color: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .info-row {
+            display: flex;
+            margin-bottom: 8px;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            width: 200px;
+            color: #4a5568;
+        }
+        
+        .info-value {
+            color: #2d3748;
+        }
+        
+        .courses-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .courses-table th {
+            background-color: #edf2f7;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #4a5568;
+        }
+        
+        .courses-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .courses-table tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        
+        .grades-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .grades-table th, .grades-table td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .grades-table th {
+            background-color: #edf2f7;
+            font-weight: 600;
+            color: #4a5568;
+        }
+        
+        .footer {
+            padding: 20px;
+            text-align: center;
+            background-color: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .result-status {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        
+        .date {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .grade-Aplus {
+            color: #2b6cb0;
+            font-weight: 600;
+        }
+        
+        .grade-A {
+            color: #4299e1;
+            font-weight: 600;
+        }
+        
+        .grade-Bplus {
+            color: #68d391;
+            font-weight: 600;
+        }
+        
+        .grade-P {
+            color: #a0aec0;
+            font-weight: 600;
+        }
+        
+        .gpa-highlight {
+            font-size: 18px;
+            color: #2b6cb0;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="marksheet-container">
+        <div class="header">
+            <h1>PROVISIONAL MARKSHEET</h1>
+        </div>
+        
+        <div class="student-info">
+            <div class="info-row">
+                <div class="info-label">Name:</div>
+                <div class="info-value">NAGARGOJE VAIBHAV BABASAHEB</div>
+            </div>
+            <!-- <div class="info-row">
+                <div class="info-label">PRN:</div>
+                <div class="info-value"></div>
+            </div> -->
+            <div class="info-row">
+                <div class="info-label">Program:</div>
+                <div class="info-value">BACHELOR OF TECHNOLOGY</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Branch:</div>
+                <div class="info-value">Computer Science And Engineering (Artificial Intelligence)</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Class:</div>
+                <div class="info-value">First Year Sem one</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Month & Year Of Exam:</div>
+                <div class="info-value">Mar 2025</div>
+            </div>
+        </div>
+        
+        <div style="padding: 0 20px;">
+            <table class="courses-table">
+                <thead>
+                    <tr>
+                        <th>Sr.No</th>
+                        <th>Course Code</th>
+                        <th>Course Title</th>
+                        <th>Credits</th>
+                        <th>Grades</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>CI1011</td>
+                        <td>APPLIED SCIENCE & ENGINEERING PROJECT-1</td>
+                        <td>2</td>
+                        <td class="grade-Aplus">A+</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>CI1013</td>
+                        <td>SCIENTIFIC RESEARCH METHODS-1</td>
+                        <td>1</td>
+                        <td class="grade-A">A</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>CI1017</td>
+                        <td>DATA ANALYSIS</td>
+                        <td>2</td>
+                        <td class="grade-A">A</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>CS1018</td>
+                        <td>PYTHON FOR ENGINEERS</td>
+                        <td>2</td>
+                        <td class="grade-Aplus">A+</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>ET1012</td>
+                        <td>APPLIED ELECTROMECHANICS</td>
+                        <td>4</td>
+                        <td class="grade-A">A</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>HS1027</td>
+                        <td>INDUCTION TRAINING</td>
+                        <td>0</td>
+                        <td class="grade-P">P</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>HS1072</td>
+                        <td>REASONING & APTITUDE DEVELOPMENT - 1</td>
+                        <td>1</td>
+                        <td class="grade-A">A</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>HS1074</td>
+                        <td>GENERAL PROFICIENCY - 1</td>
+                        <td>1</td>
+                        <td class="grade-Aplus">A+</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>HS1075</td>
+                        <td>STUDENT ACTIVITY - 1</td>
+                        <td>1</td>
+                        <td class="grade-Aplus">A+</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>HS1076</td>
+                        <td>CALCULUS AND STATISTICS</td>
+                        <td>4</td>
+                        <td class="grade-Bplus">B+</td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>HS1077</td>
+                        <td>UNIVERSAL HUMAN VALUES</td>
+                        <td>2</td>
+                        <td class="grade-A">A</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <table class="grades-table">
+                <thead>
+                    <tr>
+                        <th colspan="3">Current Semester Record</th>
+                        <th colspan="3">Cumulative Semester Record</th>
+                    </tr>
+                    <tr>
+                        <th>Course</th>
+                        <th>Credits Registered</th>
+                        <th>Credits Earned</th>
+                        <th>SGPA</th>
+                        <th>Credits Registered</th>
+                        <th>Credits Earned</th>
+                        <th>CGPA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>BTech</td>
+                        <td>20</td>
+                        <td>20</td>
+                        <td class="gpa-highlight">9.1</td>
+                        <td>20</td>
+                        <td>20</td>
+                        <td class="gpa-highlight">9.1</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="footer">
+            <div class="result-status">CUMULATIVE RESULT STATUS: PASS</div>
+            <div class="date">AS ON DATE: 06-03-2025</div>
+        </div>
     </div>
-    <div class="stat-info">
-        <h3>Current GPA</h3>
-        <h2>9.1</h2>
-    </div>
-</div>
-</div>
+</body>
+</html>
