@@ -20,10 +20,7 @@ Welcome to our **Web Development + Cloud** project! This portal is designed to m
 - AWS or Firebase for Cloud Storage
 
 ## 👥 **Contributors**
-Ojas Manchanda   
-Vaibhav Nagargoje
-Bhavik Dumore
-Pranav Gawande 
+Ojas Manchanda,   Vaibhav Nagargoje,    Bhavik Dumore,   Pranav Gawande 
 
 
 
