@@ -3,235 +3,818 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduConnect - Student Portal</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="teacher.css">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --danger-color: #f72585;
+            --light-bg: #f8f9fa;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: var(--light-bg);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(30%, -30%);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-weight: 300;
+            opacity: 0.9;
+        }
+        
+        .btn {
+            padding: 10px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #d3166d;
+        }
+        
+        .btn-logout {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-logout:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 2rem;
+        }
+        
+        .tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            border-bottom-color: var(--primary-color);
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .tab:hover:not(.active) {
+            border-bottom-color: #ddd;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(72, 149, 239, 0.2);
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .stat-icon {
+            font-size: 1.8rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .stat-icon.primary {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .stat-icon.success {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+        }
+        
+        .stat-icon.warning {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+        }
+        
+        .stat-icon.danger {
+            background-color: rgba(247, 37, 133, 0.1);
+            color: var(--danger-color);
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .badge-primary {
+            background-color: #e3f2fd;
+            color: var(--primary-color);
+        }
+        
+        .badge-success {
+            background-color: #e6ffed;
+            color: #28a745;
+        }
+        
+        .action-btns {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            color: #ddd;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
-
-    <header>
-        <div class="logo">
-            <i class="fas fa-graduation-cap"></i>
-            <span>EduConnect</span>
-        </div>
-        <div class="user-menu">
-            <i class="fas fa-bell"></i>
-            <div class="user-avatar" id="userInitials"></div>
-        </div>
-    </header>
-    
-    <div class="sidebar">
-        <ul class="sidebar-menu">
-            <li class="active" onclick="showDashboard()">
-                <i class="fas fa-tachometer-alt"></i>
-                <span>Dashboard</span>
-            </li>
-            <li onclick="showProfile()">
-                <i class="fas fa-user"></i>
-                <span>Profile</span>
-            </li>
-            <li>
-                <i class="fas fa-book"></i>
-                <span><a href="courses.html">Courses</a></span>
-            </li>
-            <li>
-                <i class="fas fa-tasks"></i>
-                <span>Assignments</span>
-            </li>
-            <li>
-                <i class="fas fa-chart-bar"></i>
-                <span><a href="grades.html">Grades</a></span>
-            </li>
-        </ul>
-    </div>
-
-    <!-- Dashboard Content (unchanged) -->
-    <div class="main-content" id="dashboard-content">
-        <!-- Dashboard content remains the same -->
-        <div class="welcome-banner">
-            <div class="welcome-text">
-                <h1>Welcome back, <span id="studentFirstName">Teacher</span>!</h1>
+    <div class="container">
+        <header>
+            <div>
+                <h1>Admin Dashboard</h1>
+                <p class="subtitle">Manage courses, materials, and users</p>
             </div>
-            <button class="btn btn-outline">
-                <i class="fas fa-calendar-alt"></i> View Calendar
+            <button class="btn btn-logout" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i> Logout
             </button>
-        </div>
-        <div class="section-title">
-            <h2>Your Courses</h2>
-            <button class="btn btn-outline">
-                <i class="fas fa-eye"></i> View All
-            </button>
-        </div>
+        </header>
         
-        
-        
-
-    <!-- Profile Content (modified for editable fields) -->
-    <div class="main-content profile-page" id="profile-content">
-        <div class="profile-header">
-            <div class="profile-avatar" id="profileInitials"></div>
-            <div class="profile-info">
-                <h1 id="studentFullName">Student Name</h1>
-                <p>FY BTech CSAI</p>
-                <p>Vishwakarma Institute Of Technology</p>
-                <p>Teacher ID: TT-2023-0456</p>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon primary">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <div>
+                    <div class="stat-value" id="totalCourses">0</div>
+                    <div class="stat-label">Active Courses</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon success">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div>
+                    <div class="stat-value" id="totalMaterials">0</div>
+                    <div class="stat-label">Uploaded Materials</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon warning">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div>
+                    <div class="stat-value" id="totalAdmins">0</div>
+                    <div class="stat-label">Admin Users</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon danger">
+                    <i class="fas fa-download"></i>
+                </div>
+                <div>
+                    <div class="stat-value" id="totalDownloads">0</div>
+                    <div class="stat-label">Total Downloads</div>
+                </div>
             </div>
         </div>
         
-        <div class="profile-details">
-            <!-- Personal Information Section (Editable) -->
-            <div class="card">
-                <div class="card-header">
-                    <h2>Personal Information</h2>
-                    <button class="btn btn-primary edit-btn" id="editPersonalBtn">
-                        <i class="fas fa-edit"></i> Edit
-                    </button>
-                    <button class="btn btn-success save-btn" id="savePersonalBtn" style="display: none;">
-                        <i class="fas fa-save"></i> Save
-                    </button>
+        <div class="tabs">
+            <div class="tab active" data-tab="courses">Courses</div>
+            <div class="tab" data-tab="materials">Materials</div>
+            <div class="tab" data-tab="users">Users</div>
+        </div>
+        
+        <!-- Courses Tab -->
+        <div class="tab-content active" id="courses-tab">
+            <div class="grid">
+                <div class="card">
+                    <h2><i class="fas fa-plus-circle"></i> Add New Course</h2>
+                    <form id="addCourseForm">
+                        <div class="form-group">
+                            <label for="courseId">Course ID</label>
+                            <input type="text" id="courseId" placeholder="e.g. math101" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="courseTitle">Course Title</label>
+                            <input type="text" id="courseTitle" placeholder="e.g. Mathematics 101" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="courseDescription">Description</label>
+                            <textarea id="courseDescription" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Course
+                        </button>
+                    </form>
                 </div>
                 
-                <div class="personal-info-view" id="personalInfoView">
-                    <div class="detail-item">
-                        <label>Date of Birth</label>
-                        <span id="dobDisplay">Not provided</span>
-                    </div>
-                    <div class="detail-item">
-                        <label>Email</label>
-                        <span id="studentEmail">student@vit.edu</span>
-                    </div>
-                    <div class="detail-item">
-                        <label>Phone</label>
-                        <span id="phoneDisplay">Not provided</span>
-                    </div>
-                    <div class="detail-item">
-                        <label>Address</label>
-                        <span id="addressDisplay">Not provided</span>
-                    </div>
-                </div>
-                
-                <div class="personal-info-edit" id="personalInfoEdit" style="display: none;">
-                    <div class="detail-item">
-                        <label for="dobInput">Date of Birth</label>
-                        <input type="date" id="dobInput" class="form-control">
-                    </div>
-                    <div class="detail-item">
-                        <label>Email</label>
-                        <span id="studentEmailEdit"></span>
-                    </div>
-                    <div class="detail-item">
-                        <label for="phoneInput">Phone</label>
-                        <input type="tel" id="phoneInput" class="form-control" placeholder="Enter your phone number">
-                    </div>
-                    <div class="detail-item">
-                        <label for="addressInput">Address</label>
-                        <textarea id="addressInput" class="form-control" placeholder="Enter your address"></textarea>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Academic Information Section (Read-only) -->
-            
-            
-            <!-- Emergency Contact Section (Editable) -->
-            <div class="card">
-                <div class="card-header">
-                    <h2>Emergency Contact</h2>
-                    <button class="btn btn-primary edit-btn" id="editEmergencyBtn">
-                        <i class="fas fa-edit"></i> Edit
-                    </button>
-                    <button class="btn btn-success save-btn" id="saveEmergencyBtn" style="display: none;">
-                        <i class="fas fa-save"></i> Save
-                    </button>
-                </div>
-                
-                <div class="emergency-info-view" id="emergencyInfoView">
-                    <div class="detail-item">
-                        <label>Name</label>
-                        <span id="emergencyNameDisplay">Not provided</span>
-                    </div>
-                    <div class="detail-item">
-                        <label>Relationship</label>
-                        <span id="emergencyRelationDisplay">Not provided</span>
-                    </div>
-                    <div class="detail-item">
-                        <label>Phone</label>
-                        <span id="emergencyPhoneDisplay">Not provided</span>
-                    </div>
-                    <div class="detail-item">
-                        <label>Email</label>
-                        <span id="emergencyEmailDisplay">Not provided</span>
-                    </div>
-                </div>
-                
-                <div class="emergency-info-edit" id="emergencyInfoEdit" style="display: none;">
-                    <div class="detail-item">
-                        <label for="emergencyNameInput">Name</label>
-                        <input type="text" id="emergencyNameInput" class="form-control" placeholder="Enter emergency contact name">
-                    </div>
-                    <div class="detail-item">
-                        <label for="emergencyRelationInput">Relationship</label>
-                        <input type="text" id="emergencyRelationInput" class="form-control" placeholder="Enter relationship">
-                    </div>
-                    <div class="detail-item">
-                        <label for="emergencyPhoneInput">Phone</label>
-                        <input type="tel" id="emergencyPhoneInput" class="form-control" placeholder="Enter emergency contact phone">
-                    </div>
-                    <div class="detail-item">
-                        <label for="emergencyEmailInput">Email</label>
-                        <input type="email" id="emergencyEmailInput" class="form-control" placeholder="Enter emergency contact email">
+                <div class="card">
+                    <h2><i class="fas fa-list"></i> Existing Courses</h2>
+                    <div id="coursesList">
+                        <!-- Courses will be loaded here -->
                     </div>
                 </div>
             </div>
         </div>
         
-        <div class="card" style="margin-top: 30px;">
-            <h2>Current Courses</h2>
-            <div class="courses-list">
-                <div class="course-card">
-                    <h3>Calculus and Statistics</h3>
-                    <p>Dr Payal - Room 204</p>
-                    <div class="progress-bar">
-                        <div class="progress"></div>
-                    </div>
-                    <p>75% completed</p>
-                    <button class="btn btn-outline">View Course</button>
+        <!-- Materials Tab -->
+        <div class="tab-content" id="materials-tab">
+            <div class="grid">
+                <div class="card">
+                    <h2><i class="fas fa-upload"></i> Upload Material</h2>
+                    <form id="uploadMaterialForm">
+                        <div class="form-group">
+                            <label for="materialCourse">Course</label>
+                            <select id="materialCourse" required>
+                                <option value="">Select a course</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="materialFile">File</label>
+                            <input type="file" id="materialFile" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="materialTitle">Display Title (optional)</label>
+                            <input type="text" id="materialTitle" placeholder="Leave blank to use filename">
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-upload"></i> Upload
+                        </button>
+                    </form>
                 </div>
                 
-                <div class="course-card">
-                    <h3>Applied Electromechanics</h3>
-                    <p>Dr. C M Mahajan - Room 112</p>
-                    <div class="progress-bar">
-                        <div class="progress" style="width: 60%;"></div>
-                    </div>
-                    <p>60% completed</p>
-                    <button class="btn btn-outline">View Course</button>
+                <div class="card">
+                    <h2><i class="fas fa-file-alt"></i> Recent Uploads</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>File</th>
+                                <th>Course</th>
+                                <th>Date</th>
+                                <th>Downloads</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="materialsTable">
+                            <!-- Materials will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Users Tab -->
+        <div class="tab-content" id="users-tab">
+            <div class="grid">
+                <div class="card">
+                    <h2><i class="fas fa-user-plus"></i> Create Admin</h2>
+                    <form id="createAdminForm">
+                        <div class="form-group">
+                            <label for="adminEmail">Email Address</label>
+                            <input type="email" id="adminEmail" placeholder="admin@university.edu" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="adminName">Full Name</label>
+                            <input type="text" id="adminName" placeholder="Dr. John Smith">
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-user-shield"></i> Create Admin Account
+                        </button>
+                    </form>
                 </div>
                 
-                <div class="course-card">
-                    <h3>American Literature</h3>
-                    <p>Ms. Garcia - Room 305</p>
-                    <div class="progress-bar">
-                        <div class="progress" style="width: 80%;"></div>
-                    </div>
-                    <p>80% completed</p>
-                    <button class="btn btn-outline">View Course</button>
-                </div>
-                
-                <div class="course-card">
-                    <h3>Computer Science</h3>
-                    <p>Mr. Davis - Room 215</p>
-                    <div class="progress-bar">
-                        <div class="progress" style="width: 45%;"></div>
-                    </div>
-                    <p>45% completed</p>
-                    <button class="btn btn-outline">View Course</button>
+                <div class="card">
+                    <h2><i class="fas fa-users-cog"></i> Admin Users</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Last Active</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminUsersTable">
+                            <!-- Admin users will be loaded here -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="teacher.js"></script>
+    <script>
+        // Database (using localStorage)
+        const db = {
+            courses: JSON.parse(localStorage.getItem('courses')) || {},
+            materials: JSON.parse(localStorage.getItem('materials')) || [],
+            users: JSON.parse(localStorage.getItem('users')) || [],
+            stats: JSON.parse(localStorage.getItem('stats')) || { downloads: 0 },
+            
+            addCourse: function(id, title, description) {
+                this.courses[id] = { id, title, description, createdAt: new Date().toISOString() };
+                this.save();
+                return true;
+            },
+            
+            addMaterial: function(courseId, fileName, fileData, displayTitle) {
+                this.materials.push({
+                    id: Date.now(),
+                    courseId,
+                    fileName,
+                    displayTitle: displayTitle || fileName,
+                    fileData,
+                    date: new Date().toISOString(),
+                    downloads: 0
+                });
+                this.save();
+                return true;
+            },
+            
+            addUser: function(email, name) {
+                this.users.push({
+                    id: Date.now(),
+                    email,
+                    name,
+                    role: 'admin',
+                    createdAt: new Date().toISOString(),
+                    lastActive: new Date().toISOString()
+                });
+                this.save();
+                return true;
+            },
+            
+            deleteCourse: function(id) {
+                delete this.courses[id];
+                this.materials = this.materials.filter(m => m.courseId !== id);
+                this.save();
+            },
+            
+            deleteMaterial: function(id) {
+                this.materials = this.materials.filter(m => m.id !== id);
+                this.save();
+            },
+            
+            deleteUser: function(id) {
+                this.users = this.users.filter(u => u.id !== id);
+                this.save();
+            },
+            
+            incrementDownload: function(materialId) {
+                const material = this.materials.find(m => m.id === materialId);
+                if (material) {
+                    material.downloads = (material.downloads || 0) + 1;
+                    this.stats.downloads = (this.stats.downloads || 0) + 1;
+                    this.save();
+                }
+            },
+            
+            save: function() {
+                localStorage.setItem('courses', JSON.stringify(this.courses));
+                localStorage.setItem('materials', JSON.stringify(this.materials));
+                localStorage.setItem('users', JSON.stringify(this.users));
+                localStorage.setItem('stats', JSON.stringify(this.stats));
+                updateStats();
+            },
+            
+            getMaterials: function() {
+                return this.materials.map(m => ({
+                    ...m,
+                    courseTitle: this.courses[m.courseId]?.title || m.courseId
+                }));
+            }
+        };
 
+        // UI Functions
+        function updateStats() {
+            document.getElementById('totalCourses').textContent = Object.keys(db.courses).length;
+            document.getElementById('totalMaterials').textContent = db.materials.length;
+            document.getElementById('totalAdmins').textContent = db.users.length;
+            document.getElementById('totalDownloads').textContent = db.stats.downloads || 0;
+        }
+
+        function loadCourses() {
+            const select = document.getElementById('materialCourse');
+            select.innerHTML = '<option value="">Select a course</option>';
+            
+            const coursesList = document.getElementById('coursesList');
+            coursesList.innerHTML = '';
+            
+            Object.values(db.courses).forEach(course => {
+                // Add to dropdown
+                const option = document.createElement('option');
+                option.value = course.id;
+                option.textContent = course.title;
+                select.appendChild(option);
+                
+                // Add to courses list
+                const courseCard = document.createElement('div');
+                courseCard.className = 'course-card';
+                courseCard.innerHTML = `
+                    <h3>${course.title} <span class="badge badge-primary">${course.id}</span></h3>
+                    <p>${course.description || 'No description'}</p>
+                    <div class="action-btns">
+                        <button class="btn btn-primary" onclick="editCourse('${course.id}')">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button class="btn btn-danger" onclick="deleteCourse('${course.id}')">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
+                `;
+                coursesList.appendChild(courseCard);
+            });
+            
+            if (Object.keys(db.courses).length === 0) {
+                coursesList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-book"></i>
+                        <h3>No courses found</h3>
+                        <p>Add your first course using the form</p>
+                    </div>
+                `;
+            }
+        }
+
+        function loadMaterials() {
+            const table = document.getElementById('materialsTable');
+            table.innerHTML = '';
+            
+            db.getMaterials()
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .forEach(material => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${material.displayTitle}</td>
+                        <td>${material.courseTitle}</td>
+                        <td>${new Date(material.date).toLocaleDateString()}</td>
+                        <td>${material.downloads || 0}</td>
+                        <td class="action-btns">
+                            <button class="btn btn-primary" onclick="downloadMaterial(${material.id}, true)">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="btn btn-danger" onclick="deleteMaterial(${material.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    `;
+                    table.appendChild(row);
+                });
+            
+            if (db.materials.length === 0) {
+                table.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="empty-state">
+                            <i class="fas fa-file-alt"></i>
+                            <h3>No materials found</h3>
+                            <p>Upload your first material</p>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        function loadUsers() {
+            const table = document.getElementById('adminUsersTable');
+            table.innerHTML = '';
+            
+            db.users.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.name || 'N/A'}</td>
+                    <td>${user.email}</td>
+                    <td>${new Date(user.lastActive).toLocaleDateString()}</td>
+                    <td class="action-btns">
+                        <button class="btn btn-danger" onclick="deleteUser(${user.id})">
+                            <i class="fas fa-trash"></i> Remove
+                        </button>
+                    </td>
+                `;
+                table.appendChild(row);
+            });
+            
+            if (db.users.length === 0) {
+                table.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="empty-state">
+                            <i class="fas fa-users"></i>
+                            <h3>No admin users found</h3>
+                            <p>Create your first admin user</p>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        function downloadMaterial(id, isAdmin = false) {
+            const material = db.materials.find(m => m.id === id);
+            if (material) {
+                if (!isAdmin) {
+                    db.incrementDownload(id);
+                }
+                
+                const blob = new Blob([material.fileData]);
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = material.fileName;
+                a.click();
+                URL.revokeObjectURL(url);
+                
+                if (!isAdmin) {
+                    loadMaterials();
+                }
+            }
+        }
+
+        // Event Listeners
+        document.getElementById('addCourseForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const id = document.getElementById('courseId').value;
+            const title = document.getElementById('courseTitle').value;
+            const description = document.getElementById('courseDescription').value;
+            
+            if (db.addCourse(id, title, description)) {
+                alert('Course added successfully!');
+                this.reset();
+                loadCourses();
+            }
+        });
+
+        document.getElementById('uploadMaterialForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const courseId = document.getElementById('materialCourse').value;
+            const fileInput = document.getElementById('materialFile');
+            const displayTitle = document.getElementById('materialTitle').value;
+            
+            if (!courseId || !fileInput.files[0]) {
+                alert('Please select a course and file');
+                return;
+            }
+            
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                if (db.addMaterial(courseId, file.name, e.target.result, displayTitle)) {
+                    alert('Material uploaded successfully!');
+                    document.getElementById('uploadMaterialForm').reset();
+                    loadMaterials();
+                }
+            };
+            
+            reader.readAsArrayBuffer(file);
+        });
+
+        document.getElementById('createAdminForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('adminEmail').value;
+            const name = document.getElementById('adminName').value;
+            
+            if (db.addUser(email, name)) {
+                alert('Admin user created successfully!');
+                this.reset();
+                loadUsers();
+            }
+        });
+
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                this.classList.add('active');
+                document.getElementById(`${this.dataset.tab}-tab`).classList.add('active');
+            });
+        });
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            // In a real app, this would call Firebase auth.signOut()
+            alert('You would be logged out here');
+            window.location.href = 'login.html';
+        });
+
+        // Admin functions
+        window.deleteCourse = function(id) {
+            if (confirm(`Delete course "${db.courses[id]?.title}" and all its materials?`)) {
+                db.deleteCourse(id);
+                loadCourses();
+                loadMaterials();
+            }
+        };
+
+        window.deleteMaterial = function(id) {
+            if (confirm('Delete this material?')) {
+                db.deleteMaterial(id);
+                loadMaterials();
+            }
+        };
+
+        window.deleteUser = function(id) {
+            if (confirm('Remove this admin user?')) {
+                db.deleteUser(id);
+                loadUsers();
+            }
+        };
+
+        window.editCourse = function(id) {
+            const course = db.courses[id];
+            if (course) {
+                document.getElementById('courseId').value = course.id;
+                document.getElementById('courseTitle').value = course.title;
+                document.getElementById('courseDescription').value = course.description || '';
+                window.scrollTo(0, 0);
+            }
+        };
+
+        // Initialize
+        updateStats();
+        loadCourses();
+        loadMaterials();
+        loadUsers();
+    </script>
 </body>
 </html>
