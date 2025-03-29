@@ -48,8 +48,8 @@ function extractStudentInfo(email) {
     studentInfo.email = email;
     studentInfo.firstName = firstName;
     studentInfo.lastName = lastName;
-    studentInfo.fullName = ${firstName} ${lastName};
-    studentInfo.initials = ${firstName.charAt(0)}${lastName.charAt(0)};
+    studentInfo.fullName = `${firstName} ${lastName}`;
+    studentInfo.initials = `${firstName.charAt(0)}${lastName.charAt(0)}`;
     
     return true;
 }
@@ -104,7 +104,7 @@ function updateUIWithStudentInfo() {
 
 // Load user's saved data from localStorage
 function loadUserData() {
-    const userDataKey = userData_${studentInfo.email};
+    const userDataKey = `userData_${studentInfo.email}`;
     const savedData = localStorage.getItem(userDataKey);
     
     if (savedData) {
@@ -161,7 +161,7 @@ function updateEmergencyContactDisplay() {
 
 // Save user data to localStorage
 function saveUserData() {
-    const userDataKey = userData_${studentInfo.email};
+    const userDataKey = `userData_${studentInfo.email}`;
     const userData = {
         personalInfo: studentInfo.personalInfo,
         emergencyContact: studentInfo.emergencyContact
