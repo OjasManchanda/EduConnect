@@ -209,15 +209,23 @@
 
         // Check User Role (You'll implement this based on your Firestore structure)
         function checkUserRole(uid, userType) {
-            // This is a placeholder - implement your actual role checking logic
-            // For now, redirect based on the form used to login
+    // Get the current user's email
+            const userEmail = auth.currentUser.email;
+    
+    // This is a placeholder - implement your actual role checking logic
             if (userType === 'student') {
                 window.location.href = 'admin-dashboard';
             } else {
-                window.location.href = 'student-dashboard.html';
-            }
-        }
-
+        // Pass the email as a query parameter or use storage
+        // Option 1: URL parameter (less secure)
+            window.location.href = `student-dashboard.html?email=${encodeURIComponent(userEmail)}`;
+        
+        // Option 2: Use localStorage (better option)
+            localStorage.setItem('studentEmail', userEmail);
+            window.location.href = 'student-dashboard.html';
+            
+    }
+}
         // Google Sign-In Handler
         function handleGoogleSignIn(userType) {
             const provider = new firebase.auth.GoogleAuthProvider();

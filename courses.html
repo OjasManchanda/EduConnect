@@ -87,6 +87,22 @@
         <h2>Active Courses</h2>
         <div id="coursesList"></div>
     </div>
+    <div class="card">
+        <h2>Course Materials</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>File Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="materialsList">
+                <!-- Filled by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
     <script>
         let courses = [];
 
@@ -121,6 +137,20 @@
                 list.appendChild(div);
             });
         }
+
+        function downloadMaterial(id) {
+            const material = db.materials.find(m => m.id === id);
+            if (material) {
+                const blob = new Blob([material.fileData]);
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = material.fileName;
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+        }
+        
     </script>
 </body>
 </html>
