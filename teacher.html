@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduConnect - Student Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="teacher.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <i class="fas fa-graduation-cap"></i>
+            <span>EduConnect</span>
+        </div>
+        <div class="user-menu">
+            <i class="fas fa-bell"></i>
+            <div class="user-avatar" id="userInitials"></div>
+        </div>
+    </header>
+    
+    <div class="sidebar">
+        <ul class="sidebar-menu">
+            <li class="active" onclick="showDashboard()">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </li>
+            <li onclick="showProfile()">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </li>
+            <li>
+                <i class="fas fa-book"></i>
+                <span><a href="courses.html">Courses</a></span>
+            </li>
+            <li>
+                <i class="fas fa-tasks"></i>
+                <span>Assignments</span>
+            </li>
+            <li>
+                <i class="fas fa-chart-bar"></i>
+                <span><a href="grades.html">Grades</a></span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Dashboard Content (unchanged) -->
+    <div class="main-content" id="dashboard-content">
+        <!-- Dashboard content remains the same -->
+        <div class="welcome-banner">
+            <div class="welcome-text">
+                <h1>Welcome back, <span id="studentFirstName">Teacher</span>!</h1>
+            </div>
+            <button class="btn btn-outline">
+                <i class="fas fa-calendar-alt"></i> View Calendar
+            </button>
+        </div>
+        <div class="section-title">
+            <h2>Your Courses</h2>
+            <button class="btn btn-outline">
+                <i class="fas fa-eye"></i> View All
+            </button>
+        </div>
+        
+        
+        
+
+    <!-- Profile Content (modified for editable fields) -->
+    <div class="main-content profile-page" id="profile-content">
+        <div class="profile-header">
+            <div class="profile-avatar" id="profileInitials"></div>
+            <div class="profile-info">
+                <h1 id="studentFullName">Student Name</h1>
+                <p>FY BTech CSAI</p>
+                <p>Vishwakarma Institute Of Technology</p>
+                <p>Teacher ID: TT-2023-0456</p>
+            </div>
+        </div>
+        
+        <div class="profile-details">
+            <!-- Personal Information Section (Editable) -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>Personal Information</h2>
+                    <button class="btn btn-primary edit-btn" id="editPersonalBtn">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <button class="btn btn-success save-btn" id="savePersonalBtn" style="display: none;">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                </div>
+                
+                <div class="personal-info-view" id="personalInfoView">
+                    <div class="detail-item">
+                        <label>Date of Birth</label>
+                        <span id="dobDisplay">Not provided</span>
+                    </div>
+                    <div class="detail-item">
+                        <label>Email</label>
+                        <span id="studentEmail">student@vit.edu</span>
+                    </div>
+                    <div class="detail-item">
+                        <label>Phone</label>
+                        <span id="phoneDisplay">Not provided</span>
+                    </div>
+                    <div class="detail-item">
+                        <label>Address</label>
+                        <span id="addressDisplay">Not provided</span>
+                    </div>
+                </div>
+                
+                <div class="personal-info-edit" id="personalInfoEdit" style="display: none;">
+                    <div class="detail-item">
+                        <label for="dobInput">Date of Birth</label>
+                        <input type="date" id="dobInput" class="form-control">
+                    </div>
+                    <div class="detail-item">
+                        <label>Email</label>
+                        <span id="studentEmailEdit"></span>
+                    </div>
+                    <div class="detail-item">
+                        <label for="phoneInput">Phone</label>
+                        <input type="tel" id="phoneInput" class="form-control" placeholder="Enter your phone number">
+                    </div>
+                    <div class="detail-item">
+                        <label for="addressInput">Address</label>
+                        <textarea id="addressInput" class="form-control" placeholder="Enter your address"></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Academic Information Section (Read-only) -->
+            
+            
+            <!-- Emergency Contact Section (Editable) -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>Emergency Contact</h2>
+                    <button class="btn btn-primary edit-btn" id="editEmergencyBtn">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <button class="btn btn-success save-btn" id="saveEmergencyBtn" style="display: none;">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                </div>
+                
+                <div class="emergency-info-view" id="emergencyInfoView">
+                    <div class="detail-item">
+                        <label>Name</label>
+                        <span id="emergencyNameDisplay">Not provided</span>
+                    </div>
+                    <div class="detail-item">
+                        <label>Relationship</label>
+                        <span id="emergencyRelationDisplay">Not provided</span>
+                    </div>
+                    <div class="detail-item">
+                        <label>Phone</label>
+                        <span id="emergencyPhoneDisplay">Not provided</span>
+                    </div>
+                    <div class="detail-item">
+                        <label>Email</label>
+                        <span id="emergencyEmailDisplay">Not provided</span>
+                    </div>
+                </div>
+                
+                <div class="emergency-info-edit" id="emergencyInfoEdit" style="display: none;">
+                    <div class="detail-item">
+                        <label for="emergencyNameInput">Name</label>
+                        <input type="text" id="emergencyNameInput" class="form-control" placeholder="Enter emergency contact name">
+                    </div>
+                    <div class="detail-item">
+                        <label for="emergencyRelationInput">Relationship</label>
+                        <input type="text" id="emergencyRelationInput" class="form-control" placeholder="Enter relationship">
+                    </div>
+                    <div class="detail-item">
+                        <label for="emergencyPhoneInput">Phone</label>
+                        <input type="tel" id="emergencyPhoneInput" class="form-control" placeholder="Enter emergency contact phone">
+                    </div>
+                    <div class="detail-item">
+                        <label for="emergencyEmailInput">Email</label>
+                        <input type="email" id="emergencyEmailInput" class="form-control" placeholder="Enter emergency contact email">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card" style="margin-top: 30px;">
+            <h2>Current Courses</h2>
+            <div class="courses-list">
+                <div class="course-card">
+                    <h3>Calculus and Statistics</h3>
+                    <p>Dr Payal - Room 204</p>
+                    <div class="progress-bar">
+                        <div class="progress"></div>
+                    </div>
+                    <p>75% completed</p>
+                    <button class="btn btn-outline">View Course</button>
+                </div>
+                
+                <div class="course-card">
+                    <h3>Applied Electromechanics</h3>
+                    <p>Dr. C M Mahajan - Room 112</p>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 60%;"></div>
+                    </div>
+                    <p>60% completed</p>
+                    <button class="btn btn-outline">View Course</button>
+                </div>
+                
+                <div class="course-card">
+                    <h3>American Literature</h3>
+                    <p>Ms. Garcia - Room 305</p>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 80%;"></div>
+                    </div>
+                    <p>80% completed</p>
+                    <button class="btn btn-outline">View Course</button>
+                </div>
+                
+                <div class="course-card">
+                    <h3>Computer Science</h3>
+                    <p>Mr. Davis - Room 215</p>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 45%;"></div>
+                    </div>
+                    <p>45% completed</p>
+                    <button class="btn btn-outline">View Course</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="teacher.js"></script>
+
+</body>
+</html>
