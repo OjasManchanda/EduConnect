@@ -6,57 +6,235 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <title>Modern Login Page | AsmrProg</title>
+    <title>Student Login Page | Firebase Auth</title>
+    <style>
+        .error-message, .success-message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            display: none;
+        }
+        .error-message {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
+        }
+        .success-message {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+        .spinner {
+            display: none;
+            margin-left: 8px;
+        }
+        .toggle-panel h1 {
+            font-size: 1.5rem;
+        }
+        .toggle-panel p {
+            font-size: 0.9rem;
+        }
+        /* Add this to make the login button look consistent */
+        button a {
+            color: inherit;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 </head>
 
 <body>
-
     <div class="container" id="container">
+        <!-- Student Login Form -->
         <div class="form-container sign-up">
-            <form method="POST" action="admin_login.php">
-                <h1>Admin Login</h1>
-                <div class="social-icons">
-                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                </div>
-                <span>or use your email to log in</span>
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Password" required>
-                <button type="submit">Login</button>
+            <form id="studentLoginForm">
+                <br>
+                <h1>Admin/Trainer Login</h1><br><br><br>
+
+                <input type="email" id="studentEmail" placeholder="Email" required>
+                <input type="password" id="studentPassword" placeholder="Password" required>
+                <div class="error-message" id="studentError"></div>
+                <div class="success-message" id="studentSuccess"></div>
+                <button type="submit">
+                    <span class="button-text">Login</span>
+                    <span class="spinner" id="studentSpinner"><i class="fas fa-spinner fa-spin"></i></span>
+                </button>
             </form>
         </div>
 
         <div class="form-container sign-in">
-            <form method="POST" action="student_login.php">
-                <h1>Student Login</h1>
-                <div class="social-icons">
-                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                </div>
-                <span>or use your email password</span>
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Password" required>
-                <a href="#">Forget Your Password?</a>
-                <button type="submit">Login</button>
-                <button type="button" onclick="window.location.href='newlogin.html'">Create Account</button>
+            <form id="adminLoginForm">
+                <h1>Student Login</h1><br><br>
+                <input type="email" id="adminEmail" placeholder="Email" required>
+                <input type="password" id="adminPassword" placeholder="Password" required>
+                <div class="error-message" id="adminError"></div>
+                <div class="success-message" id="adminSuccess"></div>
+                <a href="#" id="forgotPassword">Forget Your Password?</a>
+                <button type="submit">
+                    <span class="button-text">Login</span>
+                    <span class="spinner" id="adminSpinner"><i class="fas fa-spinner fa-spin"></i></span>
+                </button>
             </form>
         </div>
 
         <div class="toggle-container">
             <div class="toggle">
                 <div class="toggle-panel toggle-left">
-                    <h1>Hello, Sir!</h1>
-                    <p>Register with your personal details to use all of site features</p>
-                    <button type="button" class="hidden" id="login">Student Login</button>
+                    <h1>Welcome Back!</h1>
+                    <p>Login with your student credentials to access your dashboard</p>
+                    <button type="button" class="hidden" id="showStudentLogin">Student Login</button>
                 </div>
                 <div class="toggle-panel toggle-right">
-                    <h1>Hello, Friend!</h1>
-                    <p>Register with your personal details to use all of site features</p>
-                    <button type="button" class="hidden" id="register">Admin Login</button>
+                    <h1>Admin/Trainer login</h1>
+                    <p>Administrators and Trainers login here</p>
+                    <button type="button" class="hidden" id="showAdminLogin">Admin/Trainer Sign in</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+    
     <script src="script.js"></script>
-</body>
+    <script>
+        // Initialize Firebase (You'll add your config here later)
+        const firebaseConfig = {
+            apiKey: "AIzaSyCfdKi4W0mHzmScPpYiLTGT__4GUGoixZ4",
+            authDomain: "hackathon1-a98b1.firebaseapp.com",
+            projectId: "hackathon1-a98b1",
+            storageBucket: "hackathon1-a98b1.appspot.com",
+            messagingSenderId: "1009949538779",
+            appId: "YOUR_APP_ID"
+        };
+        
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
 
+        // DOM Content Loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Form switching logic
+            document.getElementById('showStudentLogin').addEventListener('click', function() {
+                document.getElementById('container').classList.remove('active');
+            });
+            
+            document.getElementById('showAdminLogin').addEventListener('click', function() {
+                document.getElementById('container').classList.add('active');
+            });
+
+            // Student Login
+            document.getElementById('studentLoginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('studentEmail').value;
+                const password = document.getElementById('studentPassword').value;
+                const spinner = document.getElementById('studentSpinner');
+                const errorElement = document.getElementById('studentError');
+                const successElement = document.getElementById('studentSuccess');
+                
+                spinner.style.display = 'inline-block';
+                errorElement.style.display = 'none';
+                
+                auth.signInWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        successElement.textContent = "Login successful! Redirecting...";
+                        successElement.style.display = 'block';
+                        // Check user role and redirect
+                        checkUserRole(userCredential.user.uid, 'student');
+                    })
+                    .catch((error) => {
+                        errorElement.textContent = error.message;
+                        errorElement.style.display = 'block';
+                        spinner.style.display = 'none';
+                    });
+            });
+
+            // Admin/Trainer Login
+            document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('adminEmail').value;
+                const password = document.getElementById('adminPassword').value;
+                const spinner = document.getElementById('adminSpinner');
+                const errorElement = document.getElementById('adminError');
+                const successElement = document.getElementById('adminSuccess');
+                
+                spinner.style.display = 'inline-block';
+                errorElement.style.display = 'none';
+                
+                auth.signInWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        successElement.textContent = "Login successful! Redirecting...";
+                        successElement.style.display = 'block';
+                        // Check user role and redirect
+                        checkUserRole(userCredential.user.uid, 'admin');
+                    })
+                    .catch((error) => {
+                        errorElement.textContent = error.message;
+                        errorElement.style.display = 'block';
+                        spinner.style.display = 'none';
+                    });
+            });
+
+            // Google Sign-In
+            document.getElementById('studentGoogleSignIn').addEventListener('click', function(e) {
+                e.preventDefault();
+                handleGoogleSignIn('student');
+            });
+            
+            document.getElementById('adminGoogleSignIn').addEventListener('click', function(e) {
+                e.preventDefault();
+                handleGoogleSignIn('admin');
+            });
+
+            // Password Reset
+            document.getElementById('forgotPassword').addEventListener('click', function(e) {
+                e.preventDefault();
+                const email = prompt("Please enter your email address:");
+                if (email) {
+                    auth.sendPasswordResetEmail(email)
+                        .then(() => {
+                            alert("Password reset email sent. Please check your inbox.");
+                        })
+                        .catch((error) => {
+                            alert(error.message);
+                        });
+                }
+            });
+        });
+
+        // Check User Role (You'll implement this based on your Firestore structure)
+        function checkUserRole(uid, userType) {
+            // This is a placeholder - implement your actual role checking logic
+            // For now, redirect based on the form used to login
+            if (userType === 'student') {
+                window.location.href = 'admin-dashboard';
+            } else {
+                window.location.href = 'student-dashboard.html';
+            }
+        }
+
+        // Google Sign-In Handler
+        function handleGoogleSignIn(userType) {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    // Check user role and redirect
+                    checkUserRole(result.user.uid, userType);
+                })
+                .catch((error) => {
+                    const errorElement = userType === 'student' ? 
+                        document.getElementById('studentError') : 
+                        document.getElementById('adminError');
+                    errorElement.textContent = error.message;
+                    errorElement.style.display = 'block';
+                });
+        }
+    </script>
+</body>
 </html>
