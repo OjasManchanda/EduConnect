@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="login.css">
     <title>Student Login Page | Firebase Auth</title>
     <style>
         .error-message, .success-message {
@@ -116,7 +116,7 @@
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
-
+// admin-dashboard
         // DOM Content Loaded
         document.addEventListener('DOMContentLoaded', function() {
             // Form switching logic
@@ -214,7 +214,7 @@
     
     // This is a placeholder - implement your actual role checking logic
             if (userType === 'student') {
-                window.location.href = 'admin-dashboard';
+                window.location.href = 'teacher.html';
             } else {
         // Pass the email as a query parameter or use storage
         // Option 1: URL parameter (less secure)
