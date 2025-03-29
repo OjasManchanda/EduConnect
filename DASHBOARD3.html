@@ -110,8 +110,7 @@
             padding: 30px;
             transition: margin 0.3s ease;
         }
-        
-        /* Dashboard Styles */
+       
         .welcome-banner {
             background-color: var(--primary-color);
             color: white;
@@ -403,7 +402,6 @@
             font-weight: 500;
         }
         
-        /* Responsive Styles */
         @media (max-width: 992px) {
             .sidebar {
                 width: 200px;
@@ -487,8 +485,7 @@
             </li>
         </ul>
     </div>
-    
-    <!-- Dashboard Content -->
+
     <div class="main-content" id="dashboard-content">
         <div class="welcome-banner">
             <div class="welcome-text">
@@ -667,8 +664,7 @@
             </div>
         </div>
     </div>
-    
-    <!-- Profile Content (hidden by default) -->
+
     <div class="main-content profile-page" id="profile-content">
         <div class="profile-header">
             <div class="profile-avatar">VN</div>
@@ -792,7 +788,6 @@
     </div>
 
     <script>
-        // Function to show dashboard and hide profile
         function showDashboard() {
             document.getElementById('dashboard-content').style.display = 'block';
             document.getElementById('profile-content').style.display = 'none';
@@ -804,8 +799,7 @@
             });
             menuItems[0].classList.add('active');
         }
-        
-        // Function to show profile and hide dashboard
+
         function showProfile() {
             document.getElementById('dashboard-content').style.display = 'none';
             document.getElementById('profile-content').style.display = 'block';
@@ -818,7 +812,6 @@
             menuItems[1].classList.add('active');
         }
         
-        // Initialize by showing dashboard
         document.addEventListener('DOMContentLoaded', function() {
             showDashboard();
         });
