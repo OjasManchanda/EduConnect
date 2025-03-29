@@ -488,3 +488,9 @@ header {
 .login-btn:hover {
     background-color: #3367d6;
 }
+.sidebar-menu a {
+    filter: none; /* Remove any blur effect */
+    opacity: 1;    /* Ensure it's fully visible */
+    color: inherit; /* Inherit color from parent */
+    text-decoration: none; /* Optional: Remove underline */
+}
